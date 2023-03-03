@@ -40,7 +40,6 @@ export const getHotel = async (req, res, next) => {
 
 export const getAllHotels = async (req, res, next) => {
     const { limit, min, max, ...others } = req.query
-    console.log(others)
     try {
         const hotels = await Hotel.find({
             ...others,

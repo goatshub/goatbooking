@@ -1,33 +1,37 @@
-import useFetch from '../../hooks/useFetch'
-import './featuredProperties.css'
+import useFetch from "../../hooks/useFetch";
+import "./featuredProperties.css";
 
 export const FeaturedProperties = () => {
-    const { data, error, loading } = useFetch("/hotels?featured=true&limit=4")
-    return (
-      <div className='fp'>
-          {loading ? "Loading..." : <>
-              {data.map((item, i) => <div className="fpItem" key={i}>
-                  <img
-                      src={item.photos[0]}
-                      alt=""
-                      className="fpImg"
-                  />
-                  <span className="fpName">{item.name}</span>
-                  <span className="fpCity">{item.address}</span>
-                  <span className="fpPrice">Starting from THB {item.cheapestPrice}</span>
-                  {item.rating && <div className="fpRatings">
-                      <button>{item.rating}</button>
-                      <span>Very good</span>
-                  </div>}
-              </div>
-            )}
-          </>}
-      </div>
-  )
-}
+  const { data, error, loading } = useFetch("/hotels?featured=true&limit=4");
+  return (
+    <div className="fp">
+      {loading ? (
+        "Loading..."
+      ) : (
+        <>
+          {data.map((item, i) => (
+            <div className="fpItem" key={i}>
+              <img src={item.photos[0]} alt="" className="fpImg" />
+              <span className="fpName">{item.name}</span>
+              <span className="fpCity">{item.address}</span>
+              <span className="fpPrice">
+                Starting from THB {item.cheapestPrice}
+              </span>
+              {item.rating && (
+                <div className="fpRatings">
+                  <button>{item.rating}</button>
+                  <span>Very good</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
+};
 
-
-        /* <div className="fpItem">
+/* <div className="fpItem">
             <img src="https://cf.bstatic.com/xdata/images/hotel/square600/421853145.webp?k=140bfc6c54ee753d4a748ee7b5a86c00c988e6fc9bb340c87172ead66a3ea9d5&o=&s=1" alt="" className="fpImg" />
             <span className="fpName">6 Continents Apartments by Prague Residences</span>
             <span className="fpCity">Prague 1, Czech Republic, Prague</span>
