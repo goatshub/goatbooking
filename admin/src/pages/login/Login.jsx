@@ -2,9 +2,9 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import "./login.css";
+import "./login.scss";
 
-export const Login = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: undefined,
@@ -22,7 +22,15 @@ export const Login = () => {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("/auth/login", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+
+      if (res.data.isAdmin) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      } else {
+        dispatch({
+          type: "LOGIN_FAILURE",
+          payload: { message: "You are not allowed!" },
+        });
+      }
       navigate("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
@@ -54,3 +62,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;
